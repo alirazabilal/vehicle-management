@@ -201,6 +201,62 @@ appLogin.get("/orders", (req, res) => {
   });
 });
 
+appLogin.post("/assign-mechanic", (req, res) => {
+  const orderId = req.body.order_id;
+  const mechanicId = req.body.m_id;
+
+  db.beginTransaction(function (err) {
+    if (err) {
+      throw err;
+    }
+
+    const updateAppointmentQuery =
+      "UPDATE Appoints SET me_id = ? WHERE a_id = ?";
+
+    db.query(
+      updateAppointmentQuery,
+      [mechanicId, orderId],
+      function (err, result) {
+        if (err) {
+          return db.rollback(function () {
+            console.error("Error updating appointment:", err);
+            res.status(500).send("Internal Server Error");
+          });
+        }
+
+        const updateMechanicAvailabilityQuery =
+          "UPDATE Mechanics SET m_availability = FALSE WHERE m_id = ?";
+
+        db.query(
+          updateMechanicAvailabilityQuery,
+          [mechanicId],
+          function (err, result) {
+            if (err) {
+              return db.rollback(function () {
+                console.error("Error updating mechanic availability:", err);
+                res.status(500).send("Internal Server Error");
+              });
+            }
+
+            db.commit(function (err) {
+              if (err) {
+                return db.rollback(function () {
+                  console.error("Error committing transaction:", err);
+                  res.status(500).send("Internal Server Error");
+                });
+              }
+              console.log(
+                "Successfully assigned mechanic and updated availability."
+              );
+              res.redirect("/orders");
+            });
+          }
+        );
+      }
+    );
+  });
+});
+
 
 appLogin.get("/infopage", (req, res) => {
   res.render("infopage");
