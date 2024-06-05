@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOOKING</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      .bg-vid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.7);
+      }
+      .nav .logo {
+        width: 50px;
+      }
+      .nav .mid h2 {
+        color: #fff;
+        margin: 0;
+      }
+      .container {
+        margin-top: 100px;
+      }
+      #glass1 {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 85px;
+        box-shadow: 0 10px 16px rgba(102, 38, 38, 0.3);
+        backdrop-filter: blur(13px);
+        -webkit-backdrop-filter: blur(15px);
+        padding: 33px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease,
+          background 0.3s ease;
+      }
+
+      #glass1:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(15, 41, 129, 0.4);
+        background: rgba(202, 17, 17, 0.3);
+      }
+
+      .text-light {
+        color: #fff !important;
+      }
+      .text-white-50 {
+        color: rgba(255, 255, 255, 0.5) !important;
+      }
+      .form-control {
+        border-radius: 5px;
+      }
+      .form-control.bg-light {
+        background-color: #f8f9fa;
+      }
+      .fl-btn {
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .fl-btn:hover {
+        background-color: #343a40;
+      }
+      .btn-dark {
+        background-color: #000;
+        border: none;
+      }
+      .btn-dark:hover {
+        background-color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <video
+      class="bg-vid"
+      src="/images/backcar.mp4"
+      autoplay
+      loop
+      muted
+      plays-inline
+    ></video>
+    <section id="navbar">
+      <div class="nav">
+        <div>
+          <img src="/images/logos.png" alt="Logo" class="logo" />
+        </div>
+        <div class="mid">
+          <h2>BOOK AN APPOINTMENT</h2>
+        </div>
+        <div class="right"></div>
+      </div>
+    </section>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col text-center text-light">
+          <h1>BOOK YOUR APPOINTMENT</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 mx-auto">
+          <div id="glass1" class="card mt-5 py-5">
+            <div class="card-body text-body-secondary">
+              <h2 class="card-title text-center mb-5 text-white-50">
+                WRITE THE FOLLOWING DETAILS BELOW
+              </h2>
+              <form class="p-0" method="POST" action="/create-appointment">
+                <div class="form-group row px-3 mb-3">
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >Owner name</label
+                  >
+                  <div class="col-sm-8 col-lg-10">
+                    <input
+                      type="text"
+                      class="form-control bg-light px-4 py-2 border-0"
+                      placeholder="Name"
+                      name="ownername"
+                      value=""
+                      data-last-active-input=""
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row px-3 mb-3">
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >Brand / Model</label
+                  >
+                  <div class="col-sm-8 col-lg-10">
+                    <input
+                      type="text"
+                      class="form-control bg-light px-4 py-2 border-0"
+                      placeholder="Brand"
+                      name="modelname"
+                      value=""
+                      data-last-active-input=""
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row px-3 mb-3">
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >Plate Number</label
+                  >
+                  <div class="col-sm-8 col-lg-10">
+                    <input
+                      type="text"
+                      class="form-control bg-light px-4 py-2 border-0"
+                      placeholder="Plate Number"
+                      name="numberplate"
+                      value=""
+                      data-last-active-input=""
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row px-3 mb-3">
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >Date</label
+                  >
+                  <div class="col-sm-8 col-lg-4">
+                    <input
+                      type="date"
+                      class="form-control bg-light px-4 py-2 border-0"
+                      name="date"
+                      value=""
+                      required
+                    />
+                  </div>
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >Time</label
+                  >
+                  <div class="col-sm-8 col-lg-4">
+                    <input
+                      type="time"
+                      class="form-control bg-light px-4 py-2 border-0"
+                      placeholder="time"
+                      name="time"
+                      value=""
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row px-3">
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >Issues Description</label
+                  >
+                  <div class="col-sm-8 col-lg-8">
+                    <textarea
+                      class="form-control bg-light px-4 py-2 border-0"
+                      name="c_issues"
+                      placeholder="Describe Issue"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="form-group row px-3">
+                  <label class="col-sm-4 col-lg-2 col-form-label text-white-50"
+                    >REQUIREMENTS</label
+                  >
+                  <div class="col-sm-8 col-lg-8">
+                    <textarea
+                      class="form-control bg-light px-4 py-2 border-0"
+                      name="c_require"
+                      placeholder="Write REQUIREMENTS"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <input
+                  type="submit"
+                  class="fl fl-btn p-4 btn btn-dark btn-block"
+                  value="Add New Appointment"
+                />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

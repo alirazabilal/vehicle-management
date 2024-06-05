@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Index Server",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/src/serverIndex.js",
+            "env": {"NODE_ENV": "development"},
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Login Server",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/src/serverLogin.js",
+            "env": {"NODE_ENV": "development"},
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch Both Servers",
+            "configurations": ["Launch Index Server", "Launch Login Server"]
+        }
+    ]
+}
