@@ -21,19 +21,19 @@ appLogin.post("/login", (req, res) => {
     query = "SELECT * FROM Mech_admins WHERE username = ?";
     redirectPath = "/mechanic-home";
   } else {
-    res.status(401).send("Invalid role");
+    res.status(401).send("ROLE IS NOT ALLOWED (WRONG)");
     return;
   }
 
   db.query(query, [username], (err, results) => {
     if (err) {
       console.error("Database error:", err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("error server internal");
       return;
     }
 
     if (results.length === 0) {
-      res.status(401).send("Invalid username");
+      res.status(401).send("USERNAME IS WRONG");
       return;
     }
 
@@ -41,7 +41,7 @@ appLogin.post("/login", (req, res) => {
     if (password === user.password) {
       res.redirect(redirectPath);
     } else {
-      res.status(401).send("Invalid password");
+      res.status(401).send("PASSWORD IS WRONG");
     }
   });
 });
@@ -55,7 +55,7 @@ appLogin.get("/mechanic-orders", (req, res) => {
   db.query(query, [1], function (err, orders) {
     if (err) {
       console.error("Database error:", err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("SERVER ERROR INTERNAL");
     } else {
       res.render("mechanic-orders", { orders: orders });
     }
@@ -69,14 +69,14 @@ appLogin.get("/search-appointments", (req, res) => {
   db.query(query, [mechanicId], (err, orders) => {
     if (err) {
       console.error("Database error:", err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("SERVER ERROR INTERNAL");
     } else {
       db.query(
         "SELECT m_id, m_name, m_role, m_availability FROM mechanics WHERE m_availability = TRUE",
         (err, mechanics) => {
           if (err) {
             console.error("Database error for mechanics:", err);
-            res.status(500).send("Internal Server Error");
+            res.status(500).send("SERVER ERROR INTERNAL");
           } else {
             res.render("mechanic-orders", { orders, mechanics });
           }
@@ -108,8 +108,9 @@ appLogin.post("/add-mechanic", (req, res) => {
     [mechanicName, serviceName, availability],
     (err, results) => {
       if (err) {
-        console.error("Error occurred while adding mechanic:", err);
-        res.status(500).send("Error occurred while adding mechanic");
+        res
+          .status(500)
+          .send("SERVER ERROR INTERNAL !!!! Error AT adding mechanic");
       } else {
         res.redirect("/mechanic");
       }
@@ -121,8 +122,7 @@ appLogin.get("/Service", (req, res) => {
 
   db.query(query, (err, results) => {
     if (err) {
-      console.error("Error retrieving services:", err);
-      res.status(500).send("Internal Serveri Error");
+      res.status(500).send("SERVER ERROR INTERNAL");
       return;
     }
 
@@ -141,8 +141,8 @@ appLogin.post("/Service", (req, res) => {
 
   db.query(query, values, (err, result) => {
     if (err) {
-      console.error("Error adding service:", err);
-      res.status(500).send("Internal Servero Error");
+      console.error("Error service:", err);
+      res.status(500).send("SERVER ERROR INTERNAL");
       return;
     }
 
@@ -150,13 +150,12 @@ appLogin.post("/Service", (req, res) => {
   });
 });
 
-//admin done
 appLogin.get("/customers", (req, res) => {
   const query = "SELECT * FROM Customers";
   db.query(query, function (err, customers) {
     if (err) {
       console.error("Database error:", err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("SERVER ERROR INTERNAL");
     } else {
       console.log(customers);
       res.render("customers", { customers });
@@ -164,20 +163,18 @@ appLogin.get("/customers", (req, res) => {
   });
 });
 
-//admin done
 appLogin.get("/mechanic", (req, res) => {
   const query = "SELECT * FROM Mechanics";
   db.query(query, function (err, mechanic) {
     if (err) {
-      console.error("Database error:", err);
-      res.status(500).send("Internal Server Error");
+      console.error("Database ISSUE ", err);
+      res.status(500).send("SERVER ERROR INTERNAL");
     } else {
       res.render("mechanic", { mechanic });
     }
   });
 });
 
-//admin done
 appLogin.get("/orders", (req, res) => {
   const queryOrders = "SELECT a_id, ownername, day_appoint FROM Appoints";
 
@@ -192,7 +189,7 @@ appLogin.get("/orders", (req, res) => {
       db.query(queryMechanics, function (err, mechanics) {
         if (err) {
           console.error("Database error for mechanics:", err);
-          res.status(500).send("Internal Server Error");
+          res.status(500).send("SERVER ERROR INTERNAL");
         } else {
           res.render("orders", { orders: orders, mechanics: mechanics });
         }
@@ -233,21 +230,20 @@ appLogin.post("/assign-mechanic", (req, res) => {
           function (err, result) {
             if (err) {
               return db.rollback(function () {
-                console.error("Error updating mechanic availability:", err);
-                res.status(500).send("Internal Server Error");
+                console.error("Error updating available:", err);
+                res.status(500).send("SERVER ERROR INTERNAL");
               });
             }
 
             db.commit(function (err) {
               if (err) {
                 return db.rollback(function () {
-                  console.error("Error committing transaction:", err);
-                  res.status(500).send("Internal Server Error");
+                  res.status(500).send("SERVER ERROR INTERNAL");
                 });
               }
-              console.log(
-                "Successfully assigned mechanic and updated availability."
-              );
+              console.log("Successful");
+              console.log("assigned mechanic");
+              console.log("updated availability");
               res.redirect("/orders");
             });
           }
@@ -256,8 +252,6 @@ appLogin.post("/assign-mechanic", (req, res) => {
     );
   });
 });
-
-
 appLogin.get("/infopage", (req, res) => {
   res.render("infopage");
 });
