@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a Review</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/css/style1.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg"
+      style="background-color: rgba(15, 119, 145, 0.7)"
+    >
+      <a class="navbar-brand" href="/cars">ADMIN</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/cars">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/infopagecars">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contactus">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/post-car">Post An Ad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/review-page">Post a Review</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <h1 class="text-center text-white mb-4">Post a Review</h1>
+      <form action="/review-page" method="POST">
+        <div class="mb-3">
+          <label for="r_personname" class="form-label">Your Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="r_personname"
+            name="r_personname"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="r_body" class="form-label">Your Review</label>
+          <textarea
+            class="form-control"
+            id="r_body"
+            name="r_body"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="mech_name" class="form-label">Your mechanic</label>
+          <textarea
+            class="form-control"
+            id="mech_name"
+            name="mech_name"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Submit Your Review
+        </button>
+      </form>
+    </div>
+
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
