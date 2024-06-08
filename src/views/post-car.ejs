@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a New Car Ad</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/css/style1.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg"
+      style="background-color: rgba(15, 119, 145, 0.7)"
+    >
+      <a class="navbar-brand" href="cars">ADMIN</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/cars">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/infopagecars">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contactus">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/post-car">Post An Ad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/review-page">Post a Review</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <h1 class="text-center text-white mb-4">Post a New Car Ad</h1>
+      <form action="/post-car" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="ca_name" class="form-label">Car Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ca_name"
+            name="ca_name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="ca_price" class="form-label">Car Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="ca_price"
+            name="ca_price"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="ca_quantity" class="form-label">Car Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="ca_quantity"
+            name="ca_quantity"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="ca_quantity" class="form-label">NAME OF SELLER</label>
+          <input type="text" class="form-control" id="ad_by" name="ad_by" />
+        </div>
+        <div class="mb-3">
+          <label for="ca_image" class="form-label">Car Image</label>
+          <input
+            type="file"
+            class="form-control"
+            id="ca_image"
+            name="ca_image"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
