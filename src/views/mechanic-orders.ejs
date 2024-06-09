@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mechanic Orders Page</title>
+
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/css/style1.css" rel="stylesheet" />
+  </head>
+  <body class="order">
+    <video
+      class="video-set"
+      src="/images/tesla.mp4"
+      autoplay
+      loop
+      muted
+      plays-inline
+    ></video>
+    <nav
+      class="navbar navbar-expand-lg"
+      style="background-color: rgba(15, 119, 145, 0.7)"
+    >
+      <a class="navbar-brand" href="mechanic-home">MECHANIC ADMIN</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/mechanic-home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mechanic-orders">Appointments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logoutm">Log Out</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="col-lg-8">
+      <section class="section dashboard">
+        <h1 class="text-white">Appointments</h1>
+        <div class="search-form">
+          <form id="searchForm" action="/search-appointments" method="get">
+            <input
+              type="text"
+              name="mechanic_id"
+              placeholder="Enter Mechanic ID"
+              required
+            />
+            <button type="submit" class="btn btn-primary">Search</button>
+          </form>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Customer Name</th>
+              <th>MODEL NAME</th>
+              <th>NUMBER PLATE</th>
+              <th>ISSUES</th>
+              <th>REQUIREMENTS</th>
+              <th>MECHANIC ID</th>
+              <th>CUSTOMER ID</th>
+
+              <th>APP. DATE</th>
+              <th>APP. TIME</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% orders.forEach((order) => { %>
+            <tr>
+              <td><%= order.a_id %></td>
+              <td><%= order.ownername %></td>
+              <td><%= order.c_modelname %></td>
+              <td><%= order.numberplate %></td>
+              <td><%= order.c_issues %></td>
+              <td><%= order.c_require %></td>
+              <td><%= order.me_id %></td>
+              <td><%= order.c_id %></td>
+
+              <td><%= new Date(order.day_appoint).toLocaleDateString() %></td>
+              <td><%= new Date(order.day_appoint).toLocaleTimeString() %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </body>
+</html>
