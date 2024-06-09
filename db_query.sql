@@ -59,6 +59,25 @@ Values(1,'honda',3535,2),(2,'wagonr',53464,2),(3,'city',53454,2),(4,'543543',133
 
 ALTER TABLE cars ADD COLUMN ca_image VARCHAR(255);
 ALTER TABLE cars ADD COLUMN ad_by VARCHAR(255) DEFAULT "ANONYMOUS CAKE";
+
+CREATE TABLE reviews(
+    r_id INT AUTO_INCREMENT PRIMARY KEY,
+    r_personname VARCHAR(255) NOT NULL,
+    r_body VARCHAR(255) NOT NULL
+)
+
+ALTER TABLE reviews
+ADD COLUMN c_id INT,
+ADD FOREIGN KEY (c_id) REFERENCES Customers(c_id);
+
+ALTER TABLE reviews
+ADD COLUMN o_id INT,
+ADD FOREIGN KEY (o_id) REFERENCES offerings(o_id);
+
+ALTER TABLE reviews ADD COLUMN mech_name VARCHAR(255);
+
+
+
 insert into Admins(username, password)
 Values('adm123', '123');
 
