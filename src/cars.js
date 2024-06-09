@@ -21,7 +21,7 @@ const store = multer.diskStorage({
   },
 });
 
-const upload = multer({ store });
+const upload = multer({ storage: store });
 
 cars.get("/cars", (req, res) => {
   const query = "SELECT * FROM cars";
