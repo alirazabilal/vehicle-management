@@ -1,12 +1,30 @@
 const express = require("express");
 const path = require("path");
+const session = require("express-session");
 const db = require("./dbsetup");
 const appLogin = express();
+
+appLogin.use(
+  session({
+    secret: "alirazabilal123",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
 appLogin.set("views", path.join(__dirname, "views"));
 appLogin.set("view engine", "ejs");
 appLogin.use(express.urlencoded({ extended: true }));
 appLogin.use(express.static(path.join(__dirname, "..", "public")));
+
+const isLoggedIn = (req, res, next) => {
+  if (req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect("/");
+  }
+};
 
 appLogin.post("/login", (req, res) => {
   const { username, password, role } = req.body;
@@ -39,6 +57,8 @@ appLogin.post("/login", (req, res) => {
 
     const user = results[0];
     if (password === user.password) {
+      req.session.loggedIn = true;
+      req.session.role = role;
       res.redirect(redirectPath);
     } else {
       res.status(401).send("PASSWORD IS WRONG");
@@ -46,10 +66,11 @@ appLogin.post("/login", (req, res) => {
   });
 });
 
-appLogin.get("/mechanic-home", (req, res) => {
+appLogin.get("/mechanic-home", isLoggedIn, (req, res) => {
   res.render("mechanic-home");
 });
-appLogin.get("/mechanic-orders", (req, res) => {
+
+appLogin.get("/mechanic-orders", isLoggedIn, (req, res) => {
   const query = "SELECT * FROM Offerings WHERE o_id = 2";
 
   db.query(query, [1], function (err, orders) {
@@ -62,7 +83,7 @@ appLogin.get("/mechanic-orders", (req, res) => {
   });
 });
 
-appLogin.get("/search-appointments", (req, res) => {
+appLogin.get("/search-appointments", isLoggedIn, (req, res) => {
   const mechanicId = req.query.mechanic_id;
 
   const query = "SELECT * FROM appoints WHERE a_id = ?";
@@ -90,14 +111,15 @@ appLogin.get("/", (req, res) => {
   res.render("login");
 });
 
-appLogin.get("/admin", (req, res) => {
+appLogin.get("/admin", isLoggedIn, (req, res) => {
   res.render("admin");
 });
-appLogin.get("/add-mechanic", (req, res) => {
+
+appLogin.get("/add-mechanic", isLoggedIn, (req, res) => {
   res.render("addmechanic");
 });
 
-appLogin.post("/add-mechanic", (req, res) => {
+appLogin.post("/add-mechanic", isLoggedIn, (req, res) => {
   const mechanicName = req.body.mechanicName;
   const serviceName = req.body.serviceName;
   const availability = req.body.availability === "true";
@@ -117,7 +139,8 @@ appLogin.post("/add-mechanic", (req, res) => {
     }
   );
 });
-appLogin.get("/Service", (req, res) => {
+
+appLogin.get("/Service", isLoggedIn, (req, res) => {
   const query = "SELECT * FROM offerings";
 
   db.query(query, (err, results) => {
@@ -130,7 +153,7 @@ appLogin.get("/Service", (req, res) => {
   });
 });
 
-appLogin.post("/Service", (req, res) => {
+appLogin.post("/Service", isLoggedIn, (req, res) => {
   const serviceName = req.body.serviceName;
   const serviceAvailability = req.body.serviceAvailability === "true";
   const serviceRating = req.body.serviceRating;
@@ -150,7 +173,7 @@ appLogin.post("/Service", (req, res) => {
   });
 });
 
-appLogin.get("/customers", (req, res) => {
+appLogin.get("/customers", isLoggedIn, (req, res) => {
   const query = "SELECT * FROM Customers";
   db.query(query, function (err, customers) {
     if (err) {
@@ -163,7 +186,7 @@ appLogin.get("/customers", (req, res) => {
   });
 });
 
-appLogin.get("/mechanic", (req, res) => {
+appLogin.get("/mechanic", isLoggedIn, (req, res) => {
   const query = "SELECT * FROM Mechanics";
   db.query(query, function (err, mechanic) {
     if (err) {
@@ -175,7 +198,7 @@ appLogin.get("/mechanic", (req, res) => {
   });
 });
 
-appLogin.get("/orders", (req, res) => {
+appLogin.get("/orders", isLoggedIn, (req, res) => {
   const queryOrders = "SELECT a_id, ownername, day_appoint FROM Appoints";
 
   const queryMechanics =
@@ -198,7 +221,7 @@ appLogin.get("/orders", (req, res) => {
   });
 });
 
-appLogin.post("/assign-mechanic", (req, res) => {
+appLogin.post("/assign-mechanic", isLoggedIn, (req, res) => {
   const orderId = req.body.order_id;
   const mechanicId = req.body.m_id;
 
@@ -252,16 +275,22 @@ appLogin.post("/assign-mechanic", (req, res) => {
     );
   });
 });
-appLogin.get("/infopage", (req, res) => {
+
+appLogin.get("/infopage", isLoggedIn, (req, res) => {
   res.render("infopage");
 });
+
 appLogin.get("/logout", (req, res) => {
+  req.session.loggedIn = false;
   res.render("logout");
 });
+
 appLogin.get("/logoutm", (req, res) => {
+  req.session.loggedIn = false;
   res.render("logoutm");
 });
-appLogin.get("/contactusrepair", (req, res) => {
+
+appLogin.get("/contactusrepair", isLoggedIn, (req, res) => {
   res.render("contactusrepair");
 });
 
