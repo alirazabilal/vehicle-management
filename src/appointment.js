@@ -2,23 +2,22 @@ const express = require("express");
 const path = require("path");
 const db = require("./dbsetup");
 
-const appIndex = express();
+const appAppoint = express();
 
-appIndex.set("views", path.join(__dirname, "views"));
-appIndex.set("view engine", "ejs");
-appIndex.use(express.urlencoded({ extended: true }));
-appIndex.use(express.static(path.join(__dirname, "..", "public")));
+appAppoint.set("views", path.join(__dirname, "views"));
+appAppoint.set("view engine", "ejs");
+appAppoint.use(express.urlencoded({ extended: true }));
+appAppoint.use(express.static(path.join(__dirname, "..", "public")));
 
-appIndex.get("/", (req, res) => {
-  res.render("index");
+appAppoint.get("/", (req, res) => {
+  res.render("home");
 });
 
-appIndex.post("/create-appointment", (req, res) => {
+appAppoint.post("/create-appointment", (req, res) => {
   const { ownername, modelname, numberplate, date, time, c_issues, c_require } =
     req.body;
   const appointmentDateTime = `${date} ${time}`;
 
-  // Insertinmg into customers table
   const customerQuery =
     "INSERT INTO Customers (c_name, c_modelname, c_issues,c_require) VALUES (?, ?, ?, ?)";
   db.query(
@@ -30,10 +29,10 @@ appIndex.post("/create-appointment", (req, res) => {
         return res.status(500).send("Error saving customer data");
       }
       const c_id = customerResult.insertId;
-      const appointmentQuery =
+      const appQuery =
         "INSERT INTO Appoints (ownername, c_modelname, numberplate, day_appoint,c_issues, c_id,c_require ) VALUES (?, ?, ?, ?, ?, ?,?)";
       db.query(
-        appointmentQuery,
+        appQuery,
         [
           ownername,
           modelname,
@@ -46,20 +45,20 @@ appIndex.post("/create-appointment", (req, res) => {
         (err, appointmentResult) => {
           if (err) {
             console.error("Error occurred:", err);
-            return res.status(500).send("Error saving the appointment");
+            return res.status(500).send("Error making the appointment");
           }
 
-          res.render("appointment-successful");
+          res.render("appointment-done");
         }
       );
     }
   );
 });
 
-appIndex.get("/booking", (req, res) => {
-  res.render("index");
+appAppoint.get("/home", (req, res) => {
+  res.render("home");
 });
 
-appIndex.listen(3000, () => {
-  console.log("Index server running at http://localhost:3000");
+appAppoint.listen(2000, () => {
+  console.log("Index server running at http://localhost:2000");
 });
