@@ -92,6 +92,24 @@ cars.post("/post-car", upload.single("ca_image"), (req, res) => {
     }
   );
 });
+cars.get("/review-page", (req, res) => {
+  res.render("review-page");
+});
+
+cars.post("/review-page", (req, res) => {
+  const { r_personname, r_body, mech_name } = req.body;
+
+  const query =
+    "INSERT INTO reviews (r_personname, r_body,mech_name) VALUES ( ?, ?,?)";
+  db.query(query, [r_personname, r_body, mech_name || null], (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.redirect("/review-page");
+    }
+  });
+});
 
 cars.get("/infopagecars", (req, res) => {
   res.render("infopagecars");
