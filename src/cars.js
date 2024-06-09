@@ -12,7 +12,7 @@ cars.set("view engine", "ejs");
 cars.use(express.urlencoded({ extended: true }));
 cars.use(express.static(path.join(__dirname, "..", "public")));
 
-const storage = multer.diskStorage({
+const store = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "..", "public", "images"));
   },
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ store });
 
 cars.get("/cars", (req, res) => {
   const query = "SELECT * FROM cars";
@@ -92,6 +92,7 @@ cars.post("/post-car", upload.single("ca_image"), (req, res) => {
     }
   );
 });
+
 cars.get("/review-page", (req, res) => {
   res.render("review-page");
 });
@@ -119,6 +120,10 @@ cars.get("/contactus", (req, res) => {
   res.render("contactus");
 });
 
-cars.listen(3002, () => {
-  console.log("Cars server running at http://localhost:3002 for cars");
+cars.get("/", (req, res) => {
+  res.redirect("/cars");
+});
+
+cars.listen(2002, () => {
+  console.log("Cars server running at http://localhost:2002 for cars");
 });
