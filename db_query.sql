@@ -57,8 +57,6 @@ insert into cars(ca_id,ca_name,ca_price,ca_quantity)
 Values(1,'honda',3535,2),(2,'wagonr',53464,2),(3,'city',53454,2),(4,'543543',133453,2),(5,'corolla',153433,2),
 (6,'prado',134353,2),(7,'landcruiser',13345,2),(8,'elentra',135333,2),(9,'tahoe',1354353,2),(10,'gmc yukon',24243534,2);
 
-ALTER TABLE cars ADD COLUMN ca_image VARCHAR(255);
-ALTER TABLE cars ADD COLUMN ad_by VARCHAR(255) DEFAULT "ANONYMOUS CAKE";
 
 CREATE TABLE reviews(
     r_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -76,8 +74,8 @@ ADD FOREIGN KEY (o_id) REFERENCES offerings(o_id);
 
 ALTER TABLE reviews ADD COLUMN mech_name VARCHAR(255);
 
-
-
+ALTER TABLE cars ADD COLUMN ca_image VARCHAR(255);
+ALTER TABLE cars ADD COLUMN ad_by VARCHAR(255) DEFAULT "ANONYMOUS CAKE";
 insert into Admins(username, password)
 Values('adm123', '123');
 
@@ -91,6 +89,9 @@ ADD FOREIGN KEY (c_id) REFERENCES Customers(c_id);
 drop table Appoints;
 
 drop table cars;
+
+drop table reviews;
+
 drop database vehicles;
 ALTER TABLE Appoints
 ADD COLUMN status VARCHAR(255) DEFAULT 'Pending';
