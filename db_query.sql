@@ -1,5 +1,17 @@
 CREATE DATABASE vehicles;
 use vehicles;
+CREATE TABLE Admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Mech_admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
 
 CREATE TABLE IF NOT EXISTS Mechanics (
     m_id INT AUTO_INCREMENT PRIMARY KEY,
