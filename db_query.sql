@@ -23,7 +23,13 @@ CREATE TABLE Appoints (
 ALTER TABLE Appoints
 ADD COLUMN me_id INT;
 
-
+CREATE TABLE Customers (
+    c_id INT AUTO_INCREMENT PRIMARY KEY,
+    c_name VARCHAR(255) NOT NULL,
+    c_modelname VARCHAR(255),
+    c_issues TEXT,
+    c_require TEXT
+);
 
 CREATE TABLE IF NOT EXISTS Mechanics (
     m_id INT AUTO_INCREMENT PRIMARY KEY,
